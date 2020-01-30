@@ -6,21 +6,19 @@ pipeline {
     stages{
         stage('Build Docker Image'){
             steps{
-                sh "sudo docker build . -t fsaito/hello-world"
+                sh "sudo docker build . -t karthequian/helloworld:latest"
             }
         }
         stage('DockerHub Push'){
             steps{
-                    sh "sudo docker tag fsaito/hello-world iad.ocir.io/idreywyoj0pu/fsaito/hello-world:latest"
-                    sh "sudo docker push iad.ocir.io/idreywyoj0pu/fsaito/hello-world:latest"
+                    sh "sudo docker tag karthequian/helloworld:latest iad.ocir.io/idreywyoj0pu/helloworld-ng:latest"
+                    sh "sudo docker push iad.ocir.io/idreywyoj0pu/helloworld-ng:latest"
             }
         }
         stage('Deploy to k8s'){
             steps{
-                sh "sudo /usr/local/bin/kubectl run hello-world-jenkins --image=iad.ocir.io/idreywyoj0pu/fsaito/hello-world:latest --port 8000 --expose"
-                sh "sudo /usr/local/bin/kubectl expose deployment hello-world-jenkins  --type=LoadBalancer --name=hello-world-jenkins-lb"
-
-                        
+                sh "sudo /usr/local/bin/kubectl create -f deployment.yml"
+                       
             }
         }  
     }
