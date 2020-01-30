@@ -27,9 +27,7 @@ spec:
  selector:
    app: helloworld
  ports:
-   - name: client
-     protocol: TCP
-     port: 80
-     nodePort: 32080
+   - port: 80
+     targetPort: 32080
  selector:
    app: helloworld
