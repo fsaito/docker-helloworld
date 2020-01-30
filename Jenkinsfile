@@ -9,7 +9,7 @@ pipeline {
                 sh "sudo docker build . -t karthequian/helloworld:latest"
             }
         }
-        stage('DockerHub Push'){
+        stage('OCI Registry Push'){
             steps{
                     sh "sudo docker tag karthequian/helloworld:latest iad.ocir.io/idreywyoj0pu/helloworld-ng:latest"
                     sh "sudo docker push iad.ocir.io/idreywyoj0pu/helloworld-ng:latest"
